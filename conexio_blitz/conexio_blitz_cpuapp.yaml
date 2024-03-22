@@ -11,11 +11,8 @@ flash: 1024
 supported:
   - gpio
   - i2c
-  - i2s
   - pwm
   - watchdog
   - usb_cdc
   - usb_device
   - netif:openthread
-  - gpio
-  - spi

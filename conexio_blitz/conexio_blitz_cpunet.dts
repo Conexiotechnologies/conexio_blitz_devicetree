@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2024 Conexio Technologies, Inc
- * Copyright (c) 2020 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -28,20 +27,20 @@
 		zephyr,ieee802154 = &ieee802154;
 	};
 
-	leds {
-		compatible = "gpio-leds";
-		led0: led_0 {
-			gpios = <&gpio0 31 GPIO_ACTIVE_LOW>;
-			label = "RED LED";
-		};
-	};
-
 	buttons {
 		compatible = "gpio-keys";
 		button0: button_0 {
 			gpios = <&gpio1 13 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Mode button";
 			zephyr,code = <INPUT_KEY_0>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		red_led: led_0 {
+			gpios = <&gpio0 31 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+			label = "Red LED";
 		};
 	};
 
@@ -74,14 +73,10 @@
 			   <21 0 &gpio1 3 0>;	/* D15 */
 	};
 
-	/* These aliases are provided for compatibility with samples */
 	aliases {
-		led0 = &led0;
 		sw0 = &button0;
-		bootloader-led0 = &led0;
-		mcuboot-button0 = &button0;
-		mcuboot-led0 = &led0;
-		watchdog0 = &wdt0;
+		led0 = &red_led;
+		watchdog0 = &wdt;
 	};
 };
 
@@ -98,19 +93,11 @@
 };
 
 &uart0 {
-	status = "okay";
+	compatible = "nordic,nrf-uarte";
+	status = "disabled";
 	current-speed = <115200>;
 	pinctrl-0 = <&uart0_default>;
 	pinctrl-1 = <&uart0_sleep>;
-	pinctrl-names = "default", "sleep";
-};
-
-&i2c0 {
-	compatible = "nordic,nrf-twim";
-	/* Cannot be used together with uart0. */
-	/* status = "okay"; */
-	pinctrl-0 = <&i2c0_default>;
-	pinctrl-1 = <&i2c0_sleep>;
 	pinctrl-names = "default", "sleep";
 };
 
@@ -127,11 +114,15 @@
 		};
 		slot0_partition: partition@c000 {
 			label = "image-0";
-			reg = <0x0000C000 0x17000>;
+			reg = <0x0000C000 0x12000>;
 		};
-		slot1_partition: partition@23000 {
+		slot1_partition: partition@1e000 {
 			label = "image-1";
-			reg = <0x00023000 0x17000>;
+			reg = <0x0001E000 0x12000>;
+		};
+		scratch_partition: partition@30000 {
+			label = "image-scratch";
+			reg = <0x00030000 0xa000>;
 		};
 		storage_partition: partition@3a000 {
 			label = "storage";
@@ -145,4 +136,4 @@
 };
 
 /* Include shared RAM configuration file */
-#include "nrf5340_shared_sram_planning_conf.dtsi"
+#include "conexio_blitz_shared_sram_planning_conf.dtsi"

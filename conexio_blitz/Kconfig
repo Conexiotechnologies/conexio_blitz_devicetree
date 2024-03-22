@@ -3,6 +3,15 @@
 # Copyright (c) 2024 Conexio Technologies, Inc
 # SPDX-License-Identifier: Apache-2.0
 
+config BLITZ_INIT_PRIORITY
+	int "Init priority"
+	default 79
+	help
+	  Initialization priority of the Conexio Blitz.
+
+config MBOX_NRFX_IPC
+	default MBOX
+
 if BOARD_CONEXIO_BLITZ_CPUAPP || BOARD_CONEXIO_BLITZ_CPUAPP_NS
 
 config BOARD_ENABLE_DCDC_APP
@@ -18,6 +27,10 @@ config BOARD_ENABLE_DCDC_NET
 config BOARD_ENABLE_DCDC_HV
 	bool "High Voltage DCDC converter"
 	select SOC_DCDC_NRF53X_HV
+	default y
+
+config BOARD_SERIAL_BACKEND_CDC_ACM
+	bool "USB CDC"
 	default y
 
 config BOARD_ENABLE_CPUNET
@@ -46,13 +59,16 @@ config DOMAIN_CPUNET_BOARD
 	  another board. For example hci_rpmsg on the nRF5340_cpunet for
 	  Bluetooth applications.
 
-endif #  BOARD_CONEXIO_BLITZ_CPUAPP || BOARD_CONEXIO_BLITZ_CPUAPP_NS
+endif # BOARD_CONEXIO_BLITZ_CPUAPP || BOARD_CONEXIO_BLITZ_CPUAPP_NS
+
+if BOARD_CONEXIO_BLITZ_CPUNET
 
 config DOMAIN_CPUAPP_BOARD
 	string
 	default "conexio_blitz_cpuapp"
-	depends on BOARD_CONEXIO_BLITZ_CPUNET
 	help
 	  The board which will be used for CPUAPP domain when creating a multi
 	  image application where one or more images should be located on
 	  another board.
+
+endif # BOARD_CONEXIO_BLITZ_CPUNET
