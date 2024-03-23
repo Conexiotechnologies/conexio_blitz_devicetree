@@ -1,3 +1,4 @@
+# Copyright (c) 2022 Nordic Semiconductor
 # Copyright (c) 2024 Conexio Technologies, Inc
 # SPDX-License-Identifier: Apache-2.0
 

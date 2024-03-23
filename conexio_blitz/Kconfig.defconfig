@@ -8,8 +8,8 @@ if BOARD_CONEXIO_BLITZ_CPUAPP || BOARD_CONEXIO_BLITZ_CPUAPP_NS
 config BOARD
 	default "conexio_blitz_cpuapp"
 
-# config BOOTLOADER_MCUBOOT
-# 	default y if !MCUBOOT
+config BOOTLOADER_MCUBOOT
+	default y if !MCUBOOT
 
 config BOARD_ENABLE_CPUNET
 	default y if !MCUBOOT
@@ -148,9 +148,9 @@ choice USB_DEVICE_LOG_LEVEL_CHOICE
 	default USB_DEVICE_LOG_LEVEL_ERR
 endchoice
 
-# Wait 4000ms at startup for logging
+# Wait 500ms at startup for logging
 config LOG_PROCESS_THREAD_STARTUP_DELAY_MS
-	default 4000
+	default 500
 
 endif # LOG
 

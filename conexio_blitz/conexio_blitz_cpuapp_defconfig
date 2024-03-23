@@ -24,9 +24,10 @@ CONFIG_UART_CONSOLE=y
 # Enable uart driver
 CONFIG_SERIAL=y
 
+# Enable pin controller driver
 CONFIG_PINCTRL=y
 
-# Blitz only has the XTAL oscillator connected to XC1 and XC2
+# Blitz only has the 32kHz RC oscillator connected to XC1 and XC2
 CONFIG_CLOCK_CONTROL_NRF_K32SRC_RC=y
 
 # Board Kconfig.defconfig enables USB CDC ACM and should disable USB remote

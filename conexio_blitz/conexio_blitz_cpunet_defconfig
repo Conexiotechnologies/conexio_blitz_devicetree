@@ -14,6 +14,8 @@ CONFIG_HW_STACK_PROTECTION=y
 # Enable GPIO
 CONFIG_GPIO=y
 
+# Enable pin controller driver
 CONFIG_PINCTRL=y
 
+# Blitz only has the 32kHz RC oscillator connected to XC1 and XC2
 CONFIG_CLOCK_CONTROL_NRF_K32SRC_RC=y
